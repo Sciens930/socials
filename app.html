@@ -1,0 +1,1883 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EasyParle Social Media Post Generator</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #e67e22;
+            --secondary-color: #3498db;
+            --dark-color: #2c3e50;
+            --light-color: #ecf0f1;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+            --danger-color: #e74c3c;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: var(--dark-color);
+        }
+        
+        .navbar {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .btn-primary:hover {
+            background-color: #d35400;
+            border-color: #d35400;
+        }
+        
+        .btn-secondary {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+        
+        .btn-secondary:hover {
+            background-color: #2980b9;
+            border-color: #2980b9;
+        }
+        
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card-header {
+            background-color: white;
+            border-bottom: 1px solid #eee;
+            font-weight: 600;
+        }
+        
+        .filter-section {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .post-content {
+            white-space: pre-line;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        .platform-badge {
+            font-size: 0.8rem;
+            padding: 5px 10px;
+            border-radius: 20px;
+        }
+        
+        .platform-linkedin {
+            background-color: #0077b5;
+            color: white;
+        }
+        
+        .platform-instagram {
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            color: white;
+        }
+        
+        .theme-badge {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+        }
+        
+        .month-badge {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        .type-badge {
+            background-color: var(--dark-color);
+            color: white;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .action-buttons .btn {
+            font-size: 0.8rem;
+            padding: 5px 10px;
+        }
+        
+        .modal-header {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .api-settings {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .nav-pills .nav-link.active {
+            background-color: var(--primary-color);
+        }
+        
+        .nav-pills .nav-link {
+            color: var(--dark-color);
+        }
+        
+        .model-selector {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .model-option {
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: calc(33.333% - 10px);
+        }
+        
+        .model-option:hover {
+            border-color: var(--primary-color);
+        }
+        
+        .model-option.selected {
+            border-color: var(--primary-color);
+            background-color: rgba(230, 126, 34, 0.1);
+        }
+        
+        .model-option img {
+            height: 40px;
+            margin-bottom: 10px;
+        }
+        
+        .model-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .model-description {
+            font-size: 0.8rem;
+            color: #666;
+        }
+        
+        .enhancement-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .enhancement-option {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: calc(25% - 10px);
+        }
+        
+        .enhancement-option:hover {
+            border-color: var(--primary-color);
+        }
+        
+        .enhancement-option.selected {
+            border-color: var(--primary-color);
+            background-color: rgba(230, 126, 34, 0.1);
+        }
+        
+        .enhancement-option i {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+            color: var(--primary-color);
+        }
+        
+        .pagination-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .pagination .page-link {
+            color: var(--dark-color);
+        }
+        
+        .pagination .page-item.active .page-link {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .welcome-section {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .welcome-section h2 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+        
+        .welcome-section p {
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        
+        .feature-card {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .feature-card h5 {
+            margin-top: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        
+        .step-indicator {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+        
+        .step {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 5px;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .step.active {
+            background-color: var(--primary-color);
+        }
+        
+        .step.completed {
+            background-color: var(--success-color);
+        }
+        
+        .step-connector {
+            height: 3px;
+            width: 50px;
+            background-color: #ddd;
+            align-self: center;
+        }
+        
+        .step-connector.active {
+            background-color: var(--success-color);
+        }
+        
+        .calendar-view {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .month-card {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 15px;
+            width: calc(25% - 10px);
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .month-card:hover {
+            border-color: var(--primary-color);
+            background-color: rgba(230, 126, 34, 0.05);
+        }
+        
+        .month-card.selected {
+            border-color: var(--primary-color);
+            background-color: rgba(230, 126, 34, 0.1);
+        }
+        
+        .month-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--dark-color);
+        }
+        
+        .month-theme {
+            font-size: 0.8rem;
+            color: #666;
+        }
+        
+        .post-count {
+            font-size: 0.9rem;
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-top: 5px;
+        }
+        
+        #loadingSpinner {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .spinner-border {
+            color: var(--primary-color);
+        }
+        
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1050;
+        }
+        
+        .toast {
+            background-color: white;
+            color: var(--dark-color);
+        }
+        
+        .toast-header {
+            background-color: var(--primary-color);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-comment-dots me-2"></i>
+                EasyParle Post Generator
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="homeLink">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="postsLink">Browse Posts</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="calendarLink">Calendar View</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="settingsLink">API Settings</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="toast-container">
+        <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" id="copyToast">
+            <div class="toast-header">
+                <i class="fas fa-check-circle me-2"></i>
+                <strong class="me-auto">Success</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                Post copied to clipboard successfully!
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-4">
+        <!-- Welcome Section -->
+        <div id="welcomeSection" class="welcome-section">
+            <h2>Welcome to EasyParle Social Media Post Generator</h2>
+            <p>Your all-in-one solution for creating and managing social media content for your dental chatbot.</p>
+            
+            <div class="row mb-4">
+                <div class="col-md-4 feature-card">
+                    <i class="fas fa-calendar-alt feature-icon"></i>
+                    <h5>12-Month Content Calendar</h5>
+                    <p>Access a full year of professionally crafted posts for LinkedIn and Instagram.</p>
+                </div>
+                <div class="col-md-4 feature-card">
+                    <i class="fas fa-magic feature-icon"></i>
+                    <h5>AI-Powered Customization</h5>
+                    <p>Enhance and personalize posts using OpenAI's powerful language models.</p>
+                </div>
+                <div class="col-md-4 feature-card">
+                    <i class="fas fa-filter feature-icon"></i>
+                    <h5>Advanced Filtering</h5>
+                    <p>Easily find the perfect post by platform, theme, month, or content type.</p>
+                </div>
+            </div>
+            
+            <button class="btn btn-primary btn-lg" id="getStartedBtn">
+                <i class="fas fa-rocket me-2"></i>Get Started
+            </button>
+        </div>
+
+        <!-- Step Indicator -->
+        <div id="stepIndicator" class="step-indicator" style="display: none;">
+            <div class="step active" id="step1">1</div>
+            <div class="step-connector" id="connector1"></div>
+            <div class="step" id="step2">2</div>
+            <div class="step-connector" id="connector2"></div>
+            <div class="step" id="step3">3</div>
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div id="navigationButtons" class="navigation-buttons" style="display: none;">
+            <button class="btn btn-secondary" id="prevButton" style="display: none;">
+                <i class="fas fa-arrow-left me-2"></i>Previous
+            </button>
+            <button class="btn btn-primary" id="nextButton">
+                Next<i class="fas fa-arrow-right ms-2"></i>
+            </button>
+        </div>
+
+        <!-- Calendar View -->
+        <div id="calendarView" class="mb-4" style="display: none;">
+            <h3 class="mb-4">12-Month Content Calendar</h3>
+            <p class="mb-4">Select a month to view its content theme and available posts:</p>
+            
+            <div class="calendar-view">
+                <div class="month-card" data-month="January">
+                    <div class="month-name">January</div>
+                    <div class="month-theme">New Year, New Practice Efficiency</div>
+                    <div class="post-count">24 posts available</div>
+                </div>
+                <div class="month-card" data-month="February">
+                    <div class="month-name">February</div>
+                    <div class="month-theme">Patient Relationship Building</div>
+                    <div class="post-count">24 posts available</div>
+                </div>
+                <div class="month-card" data-month="March">
+                    <div class="month-name">March</div>
+                    <div class="month-theme">Spring Cleaning Your Front Desk</div>
+                    <div class="post-count">24 posts available</div>
+                </div>
+                <div class="month-card" data-month="April">
+                    <div class="month-name">April</div>
+                    <div class="month-theme">ROI and Practice Growth</div>
+                    <div class="post-count">24 posts available</div>
+                </div>
+                <div class="month-card" data-month="May">
+                    <div class="month-name">May</div>
+                    <div class="month-theme">Patient Convenience in Modern Dentistry</div>
+                    <div class="post-count">24 posts available</div>
+                </div>
+                <div class="month-card" data-month="June">
+                    <div class="month-name">June</div>
+                    <div class="month-theme">Mid-Year Practice Assessment</div>
+                    <div class="post-count">24 posts available</div>
+                </div>
+                <div class="month-card" data-month="July">
+                    <div class="month-name">July</div>
+                    <div class="month-theme">Summer Schedule Management</div>
+                    <div class="post-count">24 posts available</div>
+                </div>
+                <div class="month-card" data-month="August">
+                    <div class="month-name">August</div>
+                    <div class="month-theme">Back-to-School Appointment Rush</div>
+                    <div class="post-count">24 posts available</div>
+                </div>
+                <div class="month-card" data-month="September">
+                    <div class="month-name">September</div>
+                    <div class="month-theme">Practice Technology Upgrades</div>
+                    <div class="post-count">24 posts available</div>
+                </div>
+                <div class="month-card" data-month="October">
+                    <div class="month-name">October</div>
+                    <div class="month-theme">Reducing No-Shows</div>
+                    <div class="post-count">24 posts available</div>
+                </div>
+                <div class="month-card" data-month="November">
+                    <div class="month-name">November</div>
+                    <div class="month-theme">Staff Appreciation</div>
+                    <div class="post-count">24 posts available</div>
+                </div>
+                <div class="month-card" data-month="December">
+                    <div class="month-name">December</div>
+                    <div class="month-theme">Year-End ROI Assessment</div>
+                    <div class="post-count">24 posts available</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filter Section -->
+        <div id="filterSection" class="filter-section" style="display: none;">
+            <h4 class="mb-3">Filter Posts</h4>
+            <div class="row g-3">
+                <div class="col-md-3">
+                    <label for="platformFilter" class="form-label">Platform</label>
+                    <select class="form-select" id="platformFilter">
+                        <option value="all">All Platforms</option>
+                        <option value="linkedin">LinkedIn</option>
+                        <option value="instagram">Instagram</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="themeFilter" class="form-label">Content Theme</label>
+                    <select class="form-select" id="themeFilter">
+                        <option value="all">All Themes</option>
+                        <option value="efficiency">Practice Efficiency</option>
+                        <option value="patient">Patient Experience</option>
+                        <option value="roi">ROI & Growth</option>
+                        <option value="features">Feature Spotlights</option>
+                        <option value="seasonal">Seasonal Content</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="monthFilter" class="form-label">Month</label>
+                    <select class="form-select" id="monthFilter">
+                        <option value="all">All Months</option>
+                        <option value="January">January</option>
+                        <option value="February">February</option>
+                        <option value="March">March</option>
+                        <option value="April">April</option>
+                        <option value="May">May</option>
+                        <option value="June">June</option>
+                        <option value="July">July</option>
+                        <option value="August">August</option>
+                        <option value="September">September</option>
+                        <option value="October">October</option>
+                        <option value="November">November</option>
+                        <option value="December">December</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="typeFilter" class="form-label">Post Type</label>
+                    <select class="form-select" id="typeFilter">
+                        <option value="all">All Types</option>
+                        <option value="text">Text</option>
+                        <option value="statistic">Statistics</option>
+                        <option value="testimonial">Testimonial</option>
+                        <option value="tip">Tips & Advice</option>
+                    </select>
+                </div>
+            </div>
+            <div class="d-flex justify-content-end mt-3">
+                <button class="btn btn-secondary me-2" id="resetFiltersBtn">
+                    <i class="fas fa-undo me-1"></i> Reset Filters
+                </button>
+                <button class="btn btn-primary" id="applyFiltersBtn">
+                    <i class="fas fa-filter me-1"></i> Apply Filters
+                </button>
+            </div>
+        </div>
+
+        <!-- API Settings Section -->
+        <div id="apiSettings" class="api-settings" style="display: none;">
+            <h4 class="mb-3">API Settings</h4>
+            <p>Connect to OpenAI API to enable AI-powered post customization and enhancement features.</p>
+            
+            <div class="mb-3">
+                <label for="apiKey" class="form-label">OpenAI API Key</label>
+                <div class="input-group">
+                    <input type="password" class="form-control" id="apiKey" placeholder="Enter your OpenAI API key">
+                    <button class="btn btn-outline-secondary" type="button" id="toggleApiKey">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+                <div class="form-text">Your API key is stored locally and never sent to our servers.</div>
+            </div>
+            
+            <h5 class="mt-4 mb-3">Select AI Model</h5>
+            <div class="model-selector">
+                <div class="model-option" data-model="gpt-4o">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/ChatGPT_logo.svg/1024px-ChatGPT_logo.svg.png" alt="GPT-4o">
+                    <div class="model-name">GPT-4o</div>
+                    <div class="model-description">Latest multimodal model with advanced capabilities</div>
+                </div>
+                <div class="model-option" data-model="gpt-4-turbo">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/ChatGPT_logo.svg/1024px-ChatGPT_logo.svg.png" alt="GPT-4 Turbo">
+                    <div class="model-name">GPT-4 Turbo</div>
+                    <div class="model-description">Powerful and efficient for most tasks</div>
+                </div>
+                <div class="model-option" data-model="gpt-3.5-turbo">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/ChatGPT_logo.svg/1024px-ChatGPT_logo.svg.png" alt="GPT-3.5 Turbo">
+                    <div class="model-name">GPT-3.5 Turbo</div>
+                    <div class="model-description">Fast and cost-effective option</div>
+                </div>
+            </div>
+            
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                <button class="btn btn-primary" id="saveApiSettingsBtn">
+                    <i class="fas fa-save me-1"></i> Save API Settings
+                </button>
+            </div>
+        </div>
+
+        <!-- Loading Spinner -->
+        <div id="loadingSpinner">
+            <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="mt-2">Loading posts...</p>
+        </div>
+
+        <!-- Posts Container -->
+        <div id="postsContainer" class="row" style="display: none;"></div>
+
+        <!-- Pagination -->
+        <div id="paginationContainer" class="pagination-container" style="display: none;">
+            <nav aria-label="Page navigation">
+                <ul class="pagination" id="pagination"></ul>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Post Enhancement Modal -->
+    <div class="modal fade" id="enhanceModal" tabindex="-1" aria-labelledby="enhanceModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="enhanceModalLabel">Enhance Post with AI</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul class="nav nav-pills mb-3" id="enhancementTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="text-tab" data-bs-toggle="pill" data-bs-target="#text-enhancement" type="button" role="tab">Text Customization</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="image-tab" data-bs-toggle="pill" data-bs-target="#image-generation" type="button" role="tab">Image Generation</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="variations-tab" data-bs-toggle="pill" data-bs-target="#content-variations" type="button" role="tab">Content Variations</button>
+                        </li>
+                    </ul>
+                    
+                    <div class="tab-content" id="enhancementTabsContent">
+                        <!-- Text Customization Tab -->
+                        <div class="tab-pane fade show active" id="text-enhancement" role="tabpanel">
+                            <h6 class="mb-3">Select Enhancement Options:</h6>
+                            <div class="enhancement-options">
+                                <div class="enhancement-option" data-enhancement="tone">
+                                    <i class="fas fa-comment-dots"></i>
+                                    <div>Change Tone</div>
+                                </div>
+                                <div class="enhancement-option" data-enhancement="length">
+                                    <i class="fas fa-text-height"></i>
+                                    <div>Adjust Length</div>
+                                </div>
+                                <div class="enhancement-option" data-enhancement="emojis">
+                                    <i class="far fa-smile"></i>
+                                    <div>Add Emojis</div>
+                                </div>
+                                <div class="enhancement-option" data-enhancement="hashtags">
+                                    <i class="fas fa-hashtag"></i>
+                                    <div>Optimize Hashtags</div>
+                                </div>
+                            </div>
+                            
+                            <div id="toneOptions" class="mb-3" style="display: none;">
+                                <label class="form-label">Select Tone:</label>
+                                <div class="btn-group" role="group">
+                                    <input type="radio" class="btn-check" name="tone" id="tone-professional" value="professional" checked>
+                                    <label class="btn btn-outline-secondary" for="tone-professional">Professional</label>
+                                    
+                                    <input type="radio" class="btn-check" name="tone" id="tone-friendly" value="friendly">
+                                    <label class="btn btn-outline-secondary" for="tone-friendly">Friendly</label>
+                                    
+                                    <input type="radio" class="btn-check" name="tone" id="tone-enthusiastic" value="enthusiastic">
+                                    <label class="btn btn-outline-secondary" for="tone-enthusiastic">Enthusiastic</label>
+                                    
+                                    <input type="radio" class="btn-check" name="tone" id="tone-authoritative" value="authoritative">
+                                    <label class="btn btn-outline-secondary" for="tone-authoritative">Authoritative</label>
+                                </div>
+                            </div>
+                            
+                            <div id="lengthOptions" class="mb-3" style="display: none;">
+                                <label class="form-label">Adjust Length:</label>
+                                <div class="btn-group" role="group">
+                                    <input type="radio" class="btn-check" name="length" id="length-shorter" value="shorter">
+                                    <label class="btn btn-outline-secondary" for="length-shorter">Shorter</label>
+                                    
+                                    <input type="radio" class="btn-check" name="length" id="length-original" value="original" checked>
+                                    <label class="btn btn-outline-secondary" for="length-original">Original</label>
+                                    
+                                    <input type="radio" class="btn-check" name="length" id="length-longer" value="longer">
+                                    <label class="btn btn-outline-secondary" for="length-longer">Longer</label>
+                                </div>
+                            </div>
+                            
+                            <div id="emojiOptions" class="mb-3" style="display: none;">
+                                <label class="form-label">Emoji Density:</label>
+                                <div class="btn-group" role="group">
+                                    <input type="radio" class="btn-check" name="emojis" id="emojis-minimal" value="minimal" checked>
+                                    <label class="btn btn-outline-secondary" for="emojis-minimal">Minimal</label>
+                                    
+                                    <input type="radio" class="btn-check" name="emojis" id="emojis-moderate" value="moderate">
+                                    <label class="btn btn-outline-secondary" for="emojis-moderate">Moderate</label>
+                                    
+                                    <input type="radio" class="btn-check" name="emojis" id="emojis-abundant" value="abundant">
+                                    <label class="btn btn-outline-secondary" for="emojis-abundant">Abundant</label>
+                                </div>
+                            </div>
+                            
+                            <div id="hashtagOptions" class="mb-3" style="display: none;">
+                                <label class="form-label">Hashtag Focus:</label>
+                                <div class="btn-group" role="group">
+                                    <input type="radio" class="btn-check" name="hashtags" id="hashtags-dental" value="dental" checked>
+                                    <label class="btn btn-outline-secondary" for="hashtags-dental">Dental Industry</label>
+                                    
+                                    <input type="radio" class="btn-check" name="hashtags" id="hashtags-tech" value="tech">
+                                    <label class="btn btn-outline-secondary" for="hashtags-tech">Tech/AI Focus</label>
+                                    
+                                    <input type="radio" class="btn-check" name="hashtags" id="hashtags-business" value="business">
+                                    <label class="btn btn-outline-secondary" for="hashtags-business">Business Growth</label>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="originalPost" class="form-label">Original Post:</label>
+                                <textarea class="form-control" id="originalPost" rows="5" readonly></textarea>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="enhancedPost" class="form-label">Enhanced Post:</label>
+                                <textarea class="form-control" id="enhancedPost" rows="5"></textarea>
+                                <div class="form-text">Click "Generate Enhanced Post" to create your customized version.</div>
+                            </div>
+                            
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                <button class="btn btn-primary" id="generateEnhancedPostBtn">
+                                    <i class="fas fa-magic me-1"></i> Generate Enhanced Post
+                                </button>
+                                <button class="btn btn-success" id="copyEnhancedPostBtn" disabled>
+                                    <i class="fas fa-copy me-1"></i> Copy to Clipboard
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Image Generation Tab -->
+                        <div class="tab-pane fade" id="image-generation" role="tabpanel">
+                            <div class="alert alert-info">
+                                <i class="fas fa-info-circle me-2"></i>
+                                Generate custom images based on your post content to enhance engagement.
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="imagePrompt" class="form-label">Image Prompt:</label>
+                                <textarea class="form-control" id="imagePrompt" rows="3" placeholder="Describe the image you want to generate..."></textarea>
+                                <div class="form-text">Be specific about what you want in the image for best results.</div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Image Style:</label>
+                                <div class="btn-group" role="group">
+                                    <input type="radio" class="btn-check" name="imageStyle" id="style-photo" value="photo" checked>
+                                    <label class="btn btn-outline-secondary" for="style-photo">Photorealistic</label>
+                                    
+                                    <input type="radio" class="btn-check" name="imageStyle" id="style-illustration" value="illustration">
+                                    <label class="btn btn-outline-secondary" for="style-illustration">Illustration</label>
+                                    
+                                    <input type="radio" class="btn-check" name="imageStyle" id="style-3d" value="3d">
+                                    <label class="btn btn-outline-secondary" for="style-3d">3D Render</label>
+                                    
+                                    <input type="radio" class="btn-check" name="imageStyle" id="style-cartoon" value="cartoon">
+                                    <label class="btn btn-outline-secondary" for="style-cartoon">Cartoon</label>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Image Aspect Ratio:</label>
+                                <div class="btn-group" role="group">
+                                    <input type="radio" class="btn-check" name="aspectRatio" id="ratio-square" value="1:1" checked>
+                                    <label class="btn btn-outline-secondary" for="ratio-square">Square (1:1)</label>
+                                    
+                                    <input type="radio" class="btn-check" name="aspectRatio" id="ratio-portrait" value="4:5">
+                                    <label class="btn btn-outline-secondary" for="ratio-portrait">Portrait (4:5)</label>
+                                    
+                                    <input type="radio" class="btn-check" name="aspectRatio" id="ratio-landscape" value="16:9">
+                                    <label class="btn btn-outline-secondary" for="ratio-landscape">Landscape (16:9)</label>
+                                </div>
+                            </div>
+                            
+                            <div class="text-center mb-3" id="generatedImageContainer" style="display: none;">
+                                <img src="" id="generatedImage" class="img-fluid rounded" alt="Generated image">
+                            </div>
+                            
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                <button class="btn btn-primary" id="generateImageBtn">
+                                    <i class="fas fa-image me-1"></i> Generate Image
+                                </button>
+                                <button class="btn btn-success" id="downloadImageBtn" style="display: none;">
+                                    <i class="fas fa-download me-1"></i> Download Image
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Content Variations Tab -->
+                        <div class="tab-pane fade" id="content-variations" role="tabpanel">
+                            <div class="alert alert-info">
+                                <i class="fas fa-info-circle me-2"></i>
+                                Generate multiple variations of your post to find the perfect message.
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="variationPost" class="form-label">Original Post:</label>
+                                <textarea class="form-control" id="variationPost" rows="4" readonly></textarea>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Number of Variations:</label>
+                                <div class="btn-group" role="group">
+                                    <input type="radio" class="btn-check" name="variationCount" id="variations-2" value="2" checked>
+                                    <label class="btn btn-outline-secondary" for="variations-2">2</label>
+                                    
+                                    <input type="radio" class="btn-check" name="variationCount" id="variations-3" value="3">
+                                    <label class="btn btn-outline-secondary" for="variations-3">3</label>
+                                    
+                                    <input type="radio" class="btn-check" name="variationCount" id="variations-4" value="4">
+                                    <label class="btn btn-outline-secondary" for="variations-4">4</label>
+                                </div>
+                            </div>
+                            
+                            <div id="variationsContainer"></div>
+                            
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3">
+                                <button class="btn btn-primary" id="generateVariationsBtn">
+                                    <i class="fas fa-random me-1"></i> Generate Variations
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Sample posts data (will be replaced with actual data from JSON file)
+        let postsData = [];
+        let currentPage = 1;
+        let postsPerPage = 6;
+        let filteredPosts = [];
+        let currentStep = 1;
+        let selectedMonth = null;
+        
+        // DOM Elements
+        const welcomeSection = document.getElementById('welcomeSection');
+        const stepIndicator = document.getElementById('stepIndicator');
+        const navigationButtons = document.getElementById('navigationButtons');
+        const calendarView = document.getElementById('calendarView');
+        const filterSection = document.getElementById('filterSection');
+        const postsContainer = document.getElementById('postsContainer');
+        const paginationContainer = document.getElementById('paginationContainer');
+        const apiSettings = document.getElementById('apiSettings');
+        const loadingSpinner = document.getElementById('loadingSpinner');
+        
+        // Navigation Elements
+        const homeLink = document.getElementById('homeLink');
+        const postsLink = document.getElementById('postsLink');
+        const calendarLink = document.getElementById('calendarLink');
+        const settingsLink = document.getElementById('settingsLink');
+        const getStartedBtn = document.getElementById('getStartedBtn');
+        const prevButton = document.getElementById('prevButton');
+        const nextButton = document.getElementById('nextButton');
+        
+        // Filter Elements
+        const platformFilter = document.getElementById('platformFilter');
+        const themeFilter = document.getElementById('themeFilter');
+        const monthFilter = document.getElementById('monthFilter');
+        const typeFilter = document.getElementById('typeFilter');
+        const resetFiltersBtn = document.getElementById('resetFiltersBtn');
+        const applyFiltersBtn = document.getElementById('applyFiltersBtn');
+        
+        // API Settings Elements
+        const apiKeyInput = document.getElementById('apiKey');
+        const toggleApiKeyBtn = document.getElementById('toggleApiKey');
+        const modelOptions = document.querySelectorAll('.model-option');
+        const saveApiSettingsBtn = document.getElementById('saveApiSettingsBtn');
+        
+        // Enhancement Modal Elements
+        const enhanceModal = new bootstrap.Modal(document.getElementById('enhanceModal'));
+        const enhancementOptions = document.querySelectorAll('.enhancement-option');
+        const toneOptions = document.getElementById('toneOptions');
+        const lengthOptions = document.getElementById('lengthOptions');
+        const emojiOptions = document.getElementById('emojiOptions');
+        const hashtagOptions = document.getElementById('hashtagOptions');
+        const originalPostTextarea = document.getElementById('originalPost');
+        const enhancedPostTextarea = document.getElementById('enhancedPost');
+        const generateEnhancedPostBtn = document.getElementById('generateEnhancedPostBtn');
+        const copyEnhancedPostBtn = document.getElementById('copyEnhancedPostBtn');
+        
+        // Image Generation Elements
+        const imagePromptTextarea = document.getElementById('imagePrompt');
+        const generateImageBtn = document.getElementById('generateImageBtn');
+        const generatedImageContainer = document.getElementById('generatedImageContainer');
+        const generatedImage = document.getElementById('generatedImage');
+        const downloadImageBtn = document.getElementById('downloadImageBtn');
+        
+        // Content Variations Elements
+        const variationPostTextarea = document.getElementById('variationPost');
+        const variationsContainer = document.getElementById('variationsContainer');
+        const generateVariationsBtn = document.getElementById('generateVariationsBtn');
+        
+        // Toast Elements
+        const copyToast = new bootstrap.Toast(document.getElementById('copyToast'));
+        
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load posts data
+            loadPostsData();
+            
+            // Load saved API settings
+            loadApiSettings();
+            
+            // Set up event listeners
+            setupEventListeners();
+        });
+        
+        // Load posts data from JSON file
+        function loadPostsData() {
+            // In a real implementation, this would fetch from the JSON file
+            // For now, we'll use a placeholder and simulate loading
+            loadingSpinner.style.display = 'block';
+            
+            // Simulate API call delay
+            setTimeout(() => {
+                // This is where we would normally fetch and parse the JSON file
+                // For now, we'll use the sample data structure
+                postsData = generateSamplePostsData();
+                filteredPosts = [...postsData];
+                loadingSpinner.style.display = 'none';
+            }, 1000);
+        }
+        
+        // Generate sample posts data for demonstration
+        function generateSamplePostsData() {
+            // This would be replaced with actual data from the JSON file
+            const platforms = ['linkedin', 'instagram'];
+            const themes = ['efficiency', 'patient', 'roi', 'features', 'seasonal'];
+            const types = ['text', 'statistic', 'testimonial', 'tip'];
+            const months = [
+                'January', 'February', 'March', 'April', 'May', 'June',
+                'July', 'August', 'September', 'October', 'November', 'December'
+            ];
+            
+            const samplePosts = [];
+            
+            // Generate sample posts for each month
+            months.forEach(month => {
+                // For each month, create 12 posts (6 LinkedIn, 6 Instagram)
+                for (let i = 0; i < 12; i++) {
+                    const platform = platforms[i % 2]; // Alternate between LinkedIn and Instagram
+                    const theme = themes[Math.floor(Math.random() * themes.length)];
+                    const type = types[Math.floor(Math.random() * types.length)];
+                    const week = Math.floor(i / 3) + 1; // 3 posts per week
+                    const day = ['Monday', 'Wednesday', 'Friday'][i % 3]; // For LinkedIn
+                    const dayInsta = ['Tuesday', 'Thursday', 'Saturday'][i % 3]; // For Instagram
+                    
+                    let content = '';
+                    let title = '';
+                    
+                    // Generate different content based on platform and type
+                    if (platform === 'linkedin') {
+                        if (type === 'text') {
+                            title = `${month} Week ${week} - ${day} Post`;
+                            content = `Is your dental practice starting ${new Date().getFullYear()} with the same old scheduling headaches? 🦷 EasyParle's AI chatbot handles appointment booking 24/7, reducing staff interruptions by 62% and freeing your team to focus on in-office patient care. New year, new efficiency! #DentalPracticeManagement #AIinDentistry #PracticeEfficiency`;
+                        } else if (type === 'statistic') {
+                            title = `${month} Week ${week} - ${day} Statistics`;
+                            content = `PRACTICE MATH:\n- Average dental practice: 10-15% no-show rate\n- With EasyParle automated reminders: Under 5% no-show rate\n- Potential annual savings: $45,000+\n\nThe smartest practice resolution you'll make this year is fixing your scheduling system. #DentalROI #PracticeGrowth #AppointmentOptimization`;
+                        } else if (type === 'testimonial') {
+                            title = `${month} Week ${week} - ${day} Testimonial`;
+                            content = `"Since implementing EasyParle last January, we've seen a 34% reduction in front desk calls and a 28% increase in confirmed appointments. Best practice decision we made all year." - Dr. Sarah Chen, Parkside Dental\n\nWhat could your practice accomplish with hours of administrative time returned to your team each week? #DentalPracticeSuccess #TimeManagement #PracticeTestimonial`;
+                        } else {
+                            title = `${month} Week ${week} - ${day} Tip`;
+                            content = `The hidden cost of manual scheduling isn't just in no-shows—it's in the hours your highly-trained staff spend on repetitive phone tasks instead of higher-value activities.\n\nEasyParle practices report gaining back 15-20 hours of staff time weekly. How would your practice reinvest that time? #PracticeEfficiency #ROIinDentistry #StaffProductivity`;
+                        }
+                    } else {
+                        // Instagram content
+                        if (type === 'text') {
+                            title = `${month} Week ${week} - ${dayInsta} Post`;
+                            content = `✨ New Year, New Dental Practice Efficiency! ✨\n\nSay goodbye to scheduling headaches and hello to 24/7 appointment booking with EasyParle's AI chatbot!\n\nYour front desk will thank you as phone interruptions drop by 62%, giving your team more time for what matters - caring for patients in your chair.\n\n#DentalPractice #AIAssistant #PracticeEfficiency #NewYearNewPractice #DentalTech #AppointmentBooking`;
+                        } else if (type === 'statistic') {
+                            title = `${month} Week ${week} - ${dayInsta} Statistics`;
+                            content = `📊 NO-SHOW MATH 📊\n\n- Average appointment value: $275\n- No-shows per week without automated reminders: 5-7\n- Weekly revenue loss: $1,375-$1,925\n- Annual revenue loss: $71,500-$100,100\n\nEasyParle's 22% reduction saves $15,730-$22,022 annually!\n\n#NoShowCalculation #RevenueProtection #PracticeROI #FinancialImpact #PracticeProfitability #LossReduction`;
+                        } else if (type === 'testimonial') {
+                            title = `${month} Week ${week} - ${dayInsta} Testimonial`;
+                            content = `"Our front desk team's satisfaction scores increased from 68% to 91% within three months of implementing EasyParle. They're no longer trapped in an endless cycle of phone tag and manual reminders, allowing them to focus on meaningful patient interactions." - Dr. Lisa Chen, Smile Studio\n\n#StaffSatisfaction #TeamHappiness #PracticeManagement #EmployeeExperience #JobSatisfaction #MeaningfulWork`;
+                        } else {
+                            title = `${month} Week ${week} - ${dayInsta} Tip`;
+                            content = `👥 STAFF APPRECIATION INSIGHT 👥\n\nFront desk team members who feel they're making meaningful contributions to practice success report 76% higher job satisfaction.\n\nEasyParle frees your team from routine tasks so they can focus on high-value patient interactions and practice initiatives!\n\n#MeaningfulWork #StaffSatisfaction #TeamDevelopment #EmployeeEngagement #JobFulfillment #WorkplaceHappiness`;
+                        }
+                    }
+                    
+                    samplePosts.push({
+                        id: samplePosts.length + 1,
+                        title: title,
+                        content: content,
+                        platform: platform,
+                        theme: theme,
+                        month: month,
+                        type: type,
+                        week: week,
+                        day: platform === 'linkedin' ? day : dayInsta
+                    });
+                }
+            });
+            
+            return samplePosts;
+        }
+        
+        // Set up event listeners
+        function setupEventListeners() {
+            // Navigation links
+            homeLink.addEventListener('click', showWelcomeSection);
+            postsLink.addEventListener('click', showPostsSection);
+            calendarLink.addEventListener('click', showCalendarView);
+            settingsLink.addEventListener('click', showApiSettings);
+            
+            // Get Started button
+            getStartedBtn.addEventListener('click', startGuidedFlow);
+            
+            // Navigation buttons
+            prevButton.addEventListener('click', goToPreviousStep);
+            nextButton.addEventListener('click', goToNextStep);
+            
+            // Filter buttons
+            resetFiltersBtn.addEventListener('click', resetFilters);
+            applyFiltersBtn.addEventListener('click', applyFilters);
+            
+            // API Settings
+            toggleApiKeyBtn.addEventListener('click', toggleApiKeyVisibility);
+            modelOptions.forEach(option => {
+                option.addEventListener('click', selectModel);
+            });
+            saveApiSettingsBtn.addEventListener('click', saveApiSettings);
+            
+            // Enhancement options
+            enhancementOptions.forEach(option => {
+                option.addEventListener('click', toggleEnhancementOption);
+            });
+            
+            // Enhancement buttons
+            generateEnhancedPostBtn.addEventListener('click', generateEnhancedPost);
+            copyEnhancedPostBtn.addEventListener('click', copyEnhancedPost);
+            
+            // Image generation
+            generateImageBtn.addEventListener('click', generateImage);
+            downloadImageBtn.addEventListener('click', downloadImage);
+            
+            // Content variations
+            generateVariationsBtn.addEventListener('click', generateVariations);
+            
+            // Month cards in calendar view
+            document.querySelectorAll('.month-card').forEach(card => {
+                card.addEventListener('click', selectMonthCard);
+            });
+        }
+        
+        // Show welcome section
+        function showWelcomeSection(e) {
+            if (e) e.preventDefault();
+            
+            welcomeSection.style.display = 'block';
+            stepIndicator.style.display = 'none';
+            navigationButtons.style.display = 'none';
+            calendarView.style.display = 'none';
+            filterSection.style.display = 'none';
+            postsContainer.style.display = 'none';
+            paginationContainer.style.display = 'none';
+            apiSettings.style.display = 'none';
+            
+            // Reset current step
+            currentStep = 1;
+            updateStepIndicator();
+        }
+        
+        // Show posts section
+        function showPostsSection(e) {
+            if (e) e.preventDefault();
+            
+            welcomeSection.style.display = 'none';
+            stepIndicator.style.display = 'none';
+            navigationButtons.style.display = 'none';
+            calendarView.style.display = 'none';
+            filterSection.style.display = 'block';
+            postsContainer.style.display = 'block';
+            paginationContainer.style.display = 'block';
+            apiSettings.style.display = 'none';
+            
+            // Reset filters and display all posts
+            resetFilters();
+            displayPosts();
+        }
+        
+        // Show calendar view
+        function showCalendarView(e) {
+            if (e) e.preventDefault();
+            
+            welcomeSection.style.display = 'none';
+            stepIndicator.style.display = 'none';
+            navigationButtons.style.display = 'none';
+            calendarView.style.display = 'block';
+            filterSection.style.display = 'none';
+            postsContainer.style.display = 'none';
+            paginationContainer.style.display = 'none';
+            apiSettings.style.display = 'none';
+            
+            // Reset selected month
+            document.querySelectorAll('.month-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            selectedMonth = null;
+        }
+        
+        // Show API settings
+        function showApiSettings(e) {
+            if (e) e.preventDefault();
+            
+            welcomeSection.style.display = 'none';
+            stepIndicator.style.display = 'none';
+            navigationButtons.style.display = 'none';
+            calendarView.style.display = 'none';
+            filterSection.style.display = 'none';
+            postsContainer.style.display = 'none';
+            paginationContainer.style.display = 'none';
+            apiSettings.style.display = 'block';
+        }
+        
+        // Start guided flow
+        function startGuidedFlow() {
+            welcomeSection.style.display = 'none';
+            stepIndicator.style.display = 'flex';
+            navigationButtons.style.display = 'flex';
+            
+            // Start with step 1 (Calendar View)
+            currentStep = 1;
+            updateStepIndicator();
+            showCurrentStep();
+        }
+        
+        // Update step indicator
+        function updateStepIndicator() {
+            const steps = document.querySelectorAll('.step');
+            const connectors = document.querySelectorAll('.step-connector');
+            
+            steps.forEach((step, index) => {
+                const stepNum = index + 1;
+                step.classList.remove('active', 'completed');
+                
+                if (stepNum < currentStep) {
+                    step.classList.add('completed');
+                } else if (stepNum === currentStep) {
+                    step.classList.add('active');
+                }
+            });
+            
+            connectors.forEach((connector, index) => {
+                const connectorNum = index + 1;
+                connector.classList.remove('active');
+                
+                if (connectorNum < currentStep) {
+                    connector.classList.add('active');
+                }
+            });
+            
+            // Show/hide previous button based on current step
+            prevButton.style.display = currentStep > 1 ? 'block' : 'none';
+            
+            // Update next button text for final step
+            if (currentStep === 3) {
+                nextButton.innerHTML = 'Finish<i class="fas fa-check ms-2"></i>';
+            } else {
+                nextButton.innerHTML = 'Next<i class="fas fa-arrow-right ms-2"></i>';
+            }
+        }
+        
+        // Show current step
+        function showCurrentStep() {
+            // Hide all step content
+            calendarView.style.display = 'none';
+            filterSection.style.display = 'none';
+            postsContainer.style.display = 'none';
+            paginationContainer.style.display = 'none';
+            apiSettings.style.display = 'none';
+            
+            // Show content based on current step
+            switch (currentStep) {
+                case 1:
+                    // Step 1: Calendar View
+                    calendarView.style.display = 'block';
+                    break;
+                case 2:
+                    // Step 2: Filter and Browse Posts
+                    filterSection.style.display = 'block';
+                    postsContainer.style.display = 'block';
+                    paginationContainer.style.display = 'block';
+                    
+                    // If a month was selected in step 1, apply that filter
+                    if (selectedMonth) {
+                        monthFilter.value = selectedMonth;
+                        applyFilters();
+                    } else {
+                        displayPosts();
+                    }
+                    break;
+                case 3:
+                    // Step 3: API Settings
+                    apiSettings.style.display = 'block';
+                    break;
+            }
+        }
+        
+        // Go to previous step
+        function goToPreviousStep() {
+            if (currentStep > 1) {
+                currentStep--;
+                updateStepIndicator();
+                showCurrentStep();
+            }
+        }
+        
+        // Go to next step
+        function goToNextStep() {
+            if (currentStep < 3) {
+                currentStep++;
+                updateStepIndicator();
+                showCurrentStep();
+            } else {
+                // Finish guided flow
+                showPostsSection();
+            }
+        }
+        
+        // Select month card
+        function selectMonthCard() {
+            // Remove selected class from all cards
+            document.querySelectorAll('.month-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            // Add selected class to clicked card
+            this.classList.add('selected');
+            
+            // Store selected month
+            selectedMonth = this.getAttribute('data-month');
+            
+            // If in guided flow, enable next button
+            if (currentStep === 1) {
+                nextButton.disabled = false;
+            }
+        }
+        
+        // Reset filters
+        function resetFilters() {
+            platformFilter.value = 'all';
+            themeFilter.value = 'all';
+            monthFilter.value = 'all';
+            typeFilter.value = 'all';
+            
+            // Reset filtered posts to all posts
+            filteredPosts = [...postsData];
+            currentPage = 1;
+            
+            // Display posts
+            displayPosts();
+        }
+        
+        // Apply filters
+        function applyFilters() {
+            const platform = platformFilter.value;
+            const theme = themeFilter.value;
+            const month = monthFilter.value;
+            const type = typeFilter.value;
+            
+            // Filter posts based on selected criteria
+            filteredPosts = postsData.filter(post => {
+                return (platform === 'all' || post.platform === platform) &&
+                       (theme === 'all' || post.theme === theme) &&
+                       (month === 'all' || post.month === month) &&
+                       (type === 'all' || post.type === type);
+            });
+            
+            // Reset to first page
+            currentPage = 1;
+            
+            // Display filtered posts
+            displayPosts();
+        }
+        
+        // Display posts
+        function displayPosts() {
+            // Calculate pagination
+            const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
+            const startIndex = (currentPage - 1) * postsPerPage;
+            const endIndex = startIndex + postsPerPage;
+            const currentPosts = filteredPosts.slice(startIndex, endIndex);
+            
+            // Clear posts container
+            postsContainer.innerHTML = '';
+            
+            // Check if there are posts to display
+            if (currentPosts.length === 0) {
+                postsContainer.innerHTML = `
+                    <div class="col-12 text-center py-5">
+                        <i class="fas fa-search fa-3x mb-3 text-muted"></i>
+                        <h4>No posts found</h4>
+                        <p>Try adjusting your filters to see more results.</p>
+                        <button class="btn btn-primary" onclick="resetFilters()">
+                            <i class="fas fa-undo me-1"></i> Reset Filters
+                        </button>
+                    </div>
+                `;
+                paginationContainer.style.display = 'none';
+                return;
+            }
+            
+            // Display posts
+            currentPosts.forEach(post => {
+                const platformClass = post.platform === 'linkedin' ? 'platform-linkedin' : 'platform-instagram';
+                const platformIcon = post.platform === 'linkedin' ? 'fab fa-linkedin' : 'fab fa-instagram';
+                
+                const postCard = document.createElement('div');
+                postCard.className = 'col-md-6 col-lg-4';
+                postCard.innerHTML = `
+                    <div class="card h-100">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <span class="platform-badge ${platformClass}">
+                                <i class="${platformIcon} me-1"></i> ${post.platform.charAt(0).toUpperCase() + post.platform.slice(1)}
+                            </span>
+                            <div>
+                                <span class="badge month-badge">${post.month}</span>
+                                <span class="badge theme-badge">${post.theme.charAt(0).toUpperCase() + post.theme.slice(1)}</span>
+                                <span class="badge type-badge">${post.type.charAt(0).toUpperCase() + post.type.slice(1)}</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h6 class="card-title">${post.title}</h6>
+                            <p class="card-text post-content">${post.content}</p>
+                        </div>
+                        <div class="card-footer">
+                            <div class="action-buttons">
+                                <button class="btn btn-sm btn-primary copy-btn" data-post-id="${post.id}">
+                                    <i class="fas fa-copy me-1"></i> Copy
+                                </button>
+                                <button class="btn btn-sm btn-secondary enhance-btn" data-post-id="${post.id}">
+                                    <i class="fas fa-magic me-1"></i> Enhance
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                postsContainer.appendChild(postCard);
+            });
+            
+            // Add event listeners to buttons
+            document.querySelectorAll('.copy-btn').forEach(button => {
+                button.addEventListener('click', copyPost);
+            });
+            
+            document.querySelectorAll('.enhance-btn').forEach(button => {
+                button.addEventListener('click', openEnhanceModal);
+            });
+            
+            // Update pagination
+            updatePagination(totalPages);
+        }
+        
+        // Update pagination
+        function updatePagination(totalPages) {
+            const pagination = document.getElementById('pagination');
+            pagination.innerHTML = '';
+            
+            // Don't show pagination if there's only one page
+            if (totalPages <= 1) {
+                paginationContainer.style.display = 'none';
+                return;
+            }
+            
+            paginationContainer.style.display = 'flex';
+            
+            // Previous button
+            const prevPageItem = document.createElement('li');
+            prevPageItem.className = `page-item ${currentPage === 1 ? 'disabled' : ''}`;
+            prevPageItem.innerHTML = `
+                <a class="page-link" href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            `;
+            prevPageItem.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (currentPage > 1) {
+                    currentPage--;
+                    displayPosts();
+                }
+            });
+            pagination.appendChild(prevPageItem);
+            
+            // Page numbers
+            for (let i = 1; i <= totalPages; i++) {
+                const pageItem = document.createElement('li');
+                pageItem.className = `page-item ${i === currentPage ? 'active' : ''}`;
+                pageItem.innerHTML = `<a class="page-link" href="#">${i}</a>`;
+                pageItem.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    currentPage = i;
+                    displayPosts();
+                });
+                pagination.appendChild(pageItem);
+            }
+            
+            // Next button
+            const nextPageItem = document.createElement('li');
+            nextPageItem.className = `page-item ${currentPage === totalPages ? 'disabled' : ''}`;
+            nextPageItem.innerHTML = `
+                <a class="page-link" href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            `;
+            nextPageItem.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    displayPosts();
+                }
+            });
+            pagination.appendChild(nextPageItem);
+        }
+        
+        // Copy post to clipboard
+        function copyPost(e) {
+            const postId = parseInt(e.currentTarget.getAttribute('data-post-id'));
+            const post = postsData.find(p => p.id === postId);
+            
+            if (post) {
+                navigator.clipboard.writeText(post.content)
+                    .then(() => {
+                        // Show toast notification
+                        copyToast.show();
+                    })
+                    .catch(err => {
+                        console.error('Failed to copy text: ', err);
+                        alert('Failed to copy post to clipboard.');
+                    });
+            }
+        }
+        
+        // Open enhance modal
+        function openEnhanceModal(e) {
+            const postId = parseInt(e.currentTarget.getAttribute('data-post-id'));
+            const post = postsData.find(p => p.id === postId);
+            
+            if (post) {
+                // Set post content in modal
+                originalPostTextarea.value = post.content;
+                enhancedPostTextarea.value = '';
+                variationPostTextarea.value = post.content;
+                
+                // Generate image prompt suggestion
+                imagePromptTextarea.value = `Dental practice reception with modern technology, showing EasyParle chatbot interface helping patients book appointments`;
+                
+                // Reset enhancement options
+                enhancementOptions.forEach(option => {
+                    option.classList.remove('selected');
+                });
+                
+                // Hide all option panels
+                toneOptions.style.display = 'none';
+                lengthOptions.style.display = 'none';
+                emojiOptions.style.display = 'none';
+                hashtagOptions.style.display = 'none';
+                
+                // Reset image generation
+                generatedImageContainer.style.display = 'none';
+                downloadImageBtn.style.display = 'none';
+                
+                // Reset variations container
+                variationsContainer.innerHTML = '';
+                
+                // Disable copy button until enhanced post is generated
+                copyEnhancedPostBtn.disabled = true;
+                
+                // Show modal
+                enhanceModal.show();
+            }
+        }
+        
+        // Toggle enhancement option
+        function toggleEnhancementOption(e) {
+            const option = e.currentTarget;
+            const enhancement = option.getAttribute('data-enhancement');
+            
+            // Toggle selected class
+            option.classList.toggle('selected');
+            
+            // Show/hide corresponding options
+            switch (enhancement) {
+                case 'tone':
+                    toneOptions.style.display = option.classList.contains('selected') ? 'block' : 'none';
+                    break;
+                case 'length':
+                    lengthOptions.style.display = option.classList.contains('selected') ? 'block' : 'none';
+                    break;
+                case 'emojis':
+                    emojiOptions.style.display = option.classList.contains('selected') ? 'block' : 'none';
+                    break;
+                case 'hashtags':
+                    hashtagOptions.style.display = option.classList.contains('selected') ? 'block' : 'none';
+                    break;
+            }
+        }
+        
+        // Generate enhanced post
+        function generateEnhancedPost() {
+            // Get selected enhancement options
+            const selectedEnhancements = [];
+            enhancementOptions.forEach(option => {
+                if (option.classList.contains('selected')) {
+                    selectedEnhancements.push(option.getAttribute('data-enhancement'));
+                }
+            });
+            
+            // If no enhancements selected, alert user
+            if (selectedEnhancements.length === 0) {
+                alert('Please select at least one enhancement option.');
+                return;
+            }
+            
+            // Get enhancement parameters
+            const tone = document.querySelector('input[name="tone"]:checked')?.value || 'professional';
+            const length = document.querySelector('input[name="length"]:checked')?.value || 'original';
+            const emojis = document.querySelector('input[name="emojis"]:checked')?.value || 'minimal';
+            const hashtags = document.querySelector('input[name="hashtags"]:checked')?.value || 'dental';
+            
+            // Get original post
+            const originalPost = originalPostTextarea.value;
+            
+            // In a real implementation, this would call the OpenAI API
+            // For now, we'll simulate the enhancement
+            enhancedPostTextarea.value = 'Generating enhanced post...';
+            
+            // Simulate API call delay
+            setTimeout(() => {
+                let enhancedPost = originalPost;
+                
+                // Apply enhancements (simulated)
+                if (selectedEnhancements.includes('tone')) {
+                    if (tone === 'friendly') {
+                        enhancedPost = enhancedPost.replace('Is your dental practice', 'Hey there! Is your dental practice');
+                    } else if (tone === 'enthusiastic') {
+                        enhancedPost = enhancedPost.replace('Is your dental practice', 'Wow! Is your dental practice');
+                    } else if (tone === 'authoritative') {
+                        enhancedPost = enhancedPost.replace('Is your dental practice', 'Attention dental professionals: Is your practice');
+                    }
+                }
+                
+                if (selectedEnhancements.includes('length')) {
+                    if (length === 'shorter') {
+                        enhancedPost = enhancedPost.split(' ').slice(0, Math.floor(enhancedPost.split(' ').length * 0.7)).join(' ') + '... #DentalEfficiency #AIAssistant';
+                    } else if (length === 'longer') {
+                        enhancedPost += '\n\nWith EasyParle, you\'ll also benefit from seamless Google Calendar integration, automated appointment reminders, and comprehensive analytics to track your practice\'s performance. #PracticeOptimization #DentalTechnology';
+                    }
+                }
+                
+                if (selectedEnhancements.includes('emojis')) {
+                    if (emojis === 'moderate') {
+                        enhancedPost = enhancedPost.replace('24/7', '24/7 ⏰');
+                        enhancedPost = enhancedPost.replace('staff', 'staff 👩‍⚕️');
+                        enhancedPost = enhancedPost.replace('patient care', 'patient care 😁');
+                    } else if (emojis === 'abundant') {
+                        enhancedPost = enhancedPost.replace('dental practice', 'dental practice 🦷');
+                        enhancedPost = enhancedPost.replace('24/7', '24/7 ⏰');
+                        enhancedPost = enhancedPost.replace('staff', 'staff 👩‍⚕️');
+                        enhancedPost = enhancedPost.replace('interruptions', 'interruptions 📱');
+                        enhancedPost = enhancedPost.replace('patient care', 'patient care 😁');
+                        enhancedPost = enhancedPost.replace('New year', '🎉 New year');
+                        enhancedPost = enhancedPost.replace('efficiency', 'efficiency 💯');
+                    }
+                }
+                
+                if (selectedEnhancements.includes('hashtags')) {
+                    if (hashtags === 'tech') {
+                        enhancedPost = enhancedPost.replace('#DentalPracticeManagement #AIinDentistry #PracticeEfficiency', '#AIAssistant #ChatbotTechnology #DigitalTransformation #AutomatedBooking #TechInnovation');
+                    } else if (hashtags === 'business') {
+                        enhancedPost = enhancedPost.replace('#DentalPracticeManagement #AIinDentistry #PracticeEfficiency', '#BusinessGrowth #ROIFocus #StaffProductivity #PracticeManagement #OperationalEfficiency');
+                    }
+                }
+                
+                // Update enhanced post textarea
+                enhancedPostTextarea.value = enhancedPost;
+                
+                // Enable copy button
+                copyEnhancedPostBtn.disabled = false;
+            }, 1500);
+        }
+        
+        // Copy enhanced post to clipboard
+        function copyEnhancedPost() {
+            const enhancedPost = enhancedPostTextarea.value;
+            
+            navigator.clipboard.writeText(enhancedPost)
+                .then(() => {
+                    // Show toast notification
+                    copyToast.show();
+                })
+                .catch(err => {
+                    console.error('Failed to copy text: ', err);
+                    alert('Failed to copy enhanced post to clipboard.');
+                });
+        }
+        
+        // Generate image
+        function generateImage() {
+            const prompt = imagePromptTextarea.value;
+            const style = document.querySelector('input[name="imageStyle"]:checked')?.value || 'photo';
+            const aspectRatio = document.querySelector('input[name="aspectRatio"]:checked')?.value || '1:1';
+            
+            // Validate prompt
+            if (!prompt.trim()) {
+                alert('Please enter an image prompt.');
+                return;
+            }
+            
+            // In a real implementation, this would call the OpenAI API
+            // For now, we'll simulate image generation with placeholder images
+            
+            // Show loading state
+            generateImageBtn.disabled = true;
+            generateImageBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Generating...';
+            
+            // Simulate API call delay
+            setTimeout(() => {
+                // Use placeholder images based on style
+                let imageUrl;
+                
+                switch (style) {
+                    case 'photo':
+                        imageUrl = 'https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?q=80&w=1000';
+                        break;
+                    case 'illustration':
+                        imageUrl = 'https://img.freepik.com/free-vector/dental-care-concept-illustration_114360-7343.jpg';
+                        break;
+                    case '3d':
+                        imageUrl = 'https://img.freepik.com/premium-photo/3d-render-dental-clinic-reception-area-with-modern-design_41470-4235.jpg';
+                        break;
+                    case 'cartoon':
+                        imageUrl = 'https://img.freepik.com/free-vector/dental-care-concept-illustration_114360-7343.jpg';
+                        break;
+                    default:
+                        imageUrl = 'https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?q=80&w=1000';
+                }
+                
+                // Display generated image
+                generatedImage.src = imageUrl;
+                generatedImageContainer.style.display = 'block';
+                downloadImageBtn.style.display = 'block';
+                
+                // Reset button state
+                generateImageBtn.disabled = false;
+                generateImageBtn.innerHTML = '<i class="fas fa-image me-1"></i> Generate Image';
+            }, 2000);
+        }
+        
+        // Download generated image
+        function downloadImage() {
+            const imageUrl = generatedImage.src;
+            
+            // Create a temporary link element
+            const link = document.createElement('a');
+            link.href = imageUrl;
+            link.download = 'easyparle-generated-image.jpg';
+            
+            // Append to body, click, and remove
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+        
+        // Generate content variations
+        function generateVariations() {
+            const originalPost = variationPostTextarea.value;
+            const variationCount = document.querySelector('input[name="variationCount"]:checked')?.value || '2';
+            
+            // Clear variations container
+            variationsContainer.innerHTML = '';
+            
+            // Show loading state
+            generateVariationsBtn.disabled = true;
+            generateVariationsBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Generating...';
+            
+            // Simulate API call delay
+            setTimeout(() => {
+                // Generate variations (simulated)
+                for (let i = 0; i < parseInt(variationCount); i++) {
+                    const variationCard = document.createElement('div');
+                    variationCard.className = 'card mb-3';
+                    
+                    // Create slightly different variations
+                    let variationText;
+                    if (i === 0) {
+                        variationText = originalPost.replace('Is your dental practice', 'Is your dental office').replace('New year, new efficiency', 'New year, new productivity');
+                    } else if (i === 1) {
+                        variationText = originalPost.replace('reducing staff interruptions by 62%', 'cutting phone interruptions by over 60%').replace('New year, new efficiency', 'Transform your practice this year');
+                    } else if (i === 2) {
+                        variationText = 'Ready to revolutionize your dental practice scheduling? EasyParle\'s AI chatbot works 24/7, handling appointments while reducing staff phone time by 62%. Your team can focus on what matters most: exceptional in-chair patient care. Start 2025 with smart efficiency! #DentalInnovation #AIScheduling #PracticeTransformation';
+                    } else {
+                        variationText = 'Dental practices using EasyParle report 62% fewer front desk interruptions and significantly improved staff satisfaction. Our AI chatbot handles appointment scheduling 24/7, freeing your team to deliver the exceptional patient care that builds your practice. Make 2025 your most efficient year yet! #DentalExcellence #PracticeEfficiency #AIAssistant';
+                    }
+                    
+                    variationCard.innerHTML = `
+                        <div class="card-header">
+                            Variation ${i + 1}
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text post-content">${variationText}</p>
+                            <button class="btn btn-sm btn-primary copy-variation-btn">
+                                <i class="fas fa-copy me-1"></i> Copy Variation
+                            </button>
+                        </div>
+                    `;
+                    
+                    variationsContainer.appendChild(variationCard);
+                }
+                
+                // Add event listeners to copy buttons
+                document.querySelectorAll('.copy-variation-btn').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const variationText = this.previousElementSibling.textContent;
+                        
+                        navigator.clipboard.writeText(variationText)
+                            .then(() => {
+                                // Show toast notification
+                                copyToast.show();
+                            })
+                            .catch(err => {
+                                console.error('Failed to copy text: ', err);
+                                alert('Failed to copy variation to clipboard.');
+                            });
+                    });
+                });
+                
+                // Reset button state
+                generateVariationsBtn.disabled = false;
+                generateVariationsBtn.innerHTML = '<i class="fas fa-random me-1"></i> Generate Variations';
+            }, 2000);
+        }
+        
+        // Toggle API key visibility
+        function toggleApiKeyVisibility() {
+            const apiKeyInput = document.getElementById('apiKey');
+            const toggleBtn = document.getElementById('toggleApiKey');
+            
+            if (apiKeyInput.type === 'password') {
+                apiKeyInput.type = 'text';
+                toggleBtn.innerHTML = '<i class="fas fa-eye-slash"></i>';
+            } else {
+                apiKeyInput.type = 'password';
+                toggleBtn.innerHTML = '<i class="fas fa-eye"></i>';
+            }
+        }
+        
+        // Select model
+        function selectModel() {
+            // Remove selected class from all models
+            modelOptions.forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            // Add selected class to clicked model
+            this.classList.add('selected');
+        }
+        
+        // Save API settings
+        function saveApiSettings() {
+            const apiKey = apiKeyInput.value;
+            const selectedModel = document.querySelector('.model-option.selected')?.getAttribute('data-model') || 'gpt-4o';
+            
+            // Validate API key
+            if (!apiKey) {
+                alert('Please enter your OpenAI API key.');
+                return;
+            }
+            
+            // In a real implementation, this would store the API key securely
+            // For now, we'll just simulate saving
+            
+            // Show success message
+            alert('API settings saved successfully!');
+            
+            // Store in localStorage (for demonstration purposes only)
+            localStorage.setItem('openaiApiKey', apiKey);
+            localStorage.setItem('selectedModel', selectedModel);
+            
+            // If in guided flow, go to next step
+            if (currentStep === 3) {
+                showPostsSection();
+            }
+        }
+        
+        // Load API settings
+        function loadApiSettings() {
+            // In a real implementation, this would retrieve the API key securely
+            // For now, we'll just simulate loading from localStorage
+            
+            const apiKey = localStorage.getItem('openaiApiKey') || '';
+            const selectedModel = localStorage.getItem('selectedModel') || 'gpt-4o';
+            
+            // Set API key input
+            apiKeyInput.value = apiKey;
+            
+            // Set selected model
+            modelOptions.forEach(option => {
+                if (option.getAttribute('data-model') === selectedModel) {
+                    option.classList.add('selected');
+                } else {
+                    option.classList.remove('selected');
+                }
+            });
+        }
+    </script>
+</body>
+</html>

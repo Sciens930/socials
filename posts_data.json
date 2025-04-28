@@ -1,0 +1,51 @@
+{
+  "linkedin": [
+    {
+      "date": "April 1, 2025",
+      "day": "Tuesday",
+      "type": "Text with Image",
+      "content": "🤖 Introducing EasyParle - the AI assistant that's transforming dental practices!\n\nAre your front desk staff constantly interrupted by appointment calls? EasyParle handles appointment scheduling 24/7, freeing your team to focus on patients in the office.\n\nOur dental chatbot integrates seamlessly with your Google Calendar, allowing patients to self-schedule in real-time without phone tag or double-booking.\n\nPractices using AI assistants like ours have seen patient satisfaction scores rise by 35%. Ready to transform your practice efficiency?\n\n#DentalPracticeManagement #AIinDentistry #EasyParle",
+      "theme": "Introduction & Core Benefits"
+    },
+    {
+      "date": "April 2, 2025",
+      "day": "Wednesday",
+      "type": "Carousel Post",
+      "content": "[Slide 1] The EasyParle Advantage: 24/7 Appointment Booking\n\n[Slide 2] Reduce front desk workload by automating repetitive tasks\n\n[Slide 3] Never miss a patient inquiry - even at 2AM!\n\n[Slide 4] Minimize no-shows with automatic reminders (20% reduction!)\n\n[Slide 5] Boost practice efficiency with seamless Google Calendar integration\n\nOne no-show per day can cost your practice $20,000-$70,000 annually. EasyParle's automated reminder system has helped practices reduce no-shows by over 20%. That's real ROI for your dental practice!\n\n#DentalTechnology #PatientExperience #AppointmentBooking",
+      "theme": "Introduction & Core Benefits"
+    },
+    {
+      "date": "April 3, 2025",
+      "day": "Thursday",
+      "type": "Single Image Post",
+      "content": "📊 The numbers don't lie: Dental practices using EasyParle have seen up to a 30% increase in patient bookings as more inquiries convert to appointments.\n\nWhy? Because patients get instant answers to their questions and can book appointments immediately - even after hours when your competitors' phones go to voicemail.\n\nIs your practice capturing these opportunities or losing them to voicemail?\n\n#PracticeEfficiency #DentalMarketing #PatientExperience",
+      "theme": "Introduction & Core Benefits"
+    }
+  ],
+  "instagram": [
+    {
+      "date": "April 1, 2025",
+      "day": "Tuesday",
+      "type": "Single Image",
+      "content": "🤖 Meet EasyParle - your dental practice's new 24/7 receptionist!\n\nNever miss another appointment opportunity, even at 2AM. Our AI chatbot handles booking while you sleep, giving your patients the convenience they expect and your staff the freedom to focus on in-office care.\n\nOne practice reported: \"We captured 15 new patient appointments in our first week - all booked after hours when we would have missed them before!\"\n\nReady to transform your dental practice? Visit the link in our bio to learn more.\n\n#DentalPractice #AIchatbot #AppointmentBooking #DentistryLife #PracticeManagement #DentalTech #EasyParle #24/7Booking",
+      "theme": "Introduction & Core Benefits",
+      "visual": "Friendly robot character at reception desk with calendar and clock showing 24/7"
+    },
+    {
+      "date": "April 3, 2025",
+      "day": "Thursday",
+      "type": "Carousel (3 slides)",
+      "content": "💼 The EasyParle Effect: Before & After\n\nSwipe to see how dental practices transform after implementing our AI chatbot!\n\nThe numbers don't lie - practices using EasyParle have seen:\n• 20% reduction in no-shows\n• 30% increase in patient bookings\n• 35% improvement in patient satisfaction\n• 75% reduction in phone interruptions\n\nIs your practice ready for this transformation? Link in bio to book a demo!\n\n#BeforeAndAfter #DentalOffice #PracticeEfficiency #PatientCare #DentalTechnology #EasyParle #DentalChatbot",
+      "theme": "Introduction & Core Benefits",
+      "visual": "Slide 1: Overwhelmed receptionist with multiple phone lines ringing\nSlide 2: Calm receptionist helping patient while chatbot handles calls\nSlide 3: Graph showing improvements in key metrics"
+    },
+    {
+      "date": "April 5, 2025",
+      "day": "Saturday",
+      "type": "Reel (15-second video)",
+      "content": "Watch how EasyParle books a dental appointment in seconds - no staff needed! 👀\n\nThis is what 24/7 appointment booking looks like. While your competitors send patients to voicemail after hours, your practice keeps booking appointments around the clock.\n\nTry it yourself - link in bio!\n\n#DentalTech #AppointmentBooking #AIassistant #DentistryLife #PatientExperience #EasyParle #DentalInnovation",
+      "theme": "Introduction & Core Benefits",
+      "visual": "Screen recording of chatbot conversation booking appointment, sped up to show entire process in 15 seconds"
+    }
+  ]
+}
